@@ -1,5 +1,8 @@
-var createError = require('http-errors');
-var express = require('express');
+ /* 1. Carga de variables de entorno */
+ require('dotenv').config()
+
+ var createError = require('http-errors');
+ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
