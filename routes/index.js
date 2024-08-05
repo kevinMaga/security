@@ -72,7 +72,7 @@ router.post('/login', async function (req, res, next) {
           res.redirect('/users');
         } else {
           /* 11. En caso de fallo, redirija a '/' */
-          res.redirect('/');
+          res.redirect('/token');
         }
       } else {
         res.redirect('/');
