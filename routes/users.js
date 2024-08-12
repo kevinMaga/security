@@ -4,7 +4,7 @@ var router = express.Router();
 /* 1. Importe el módulo crypto */
 let crypto = require('crypto');
 
-/* 1. Instanciación del modelo */
+/* 1. Cargue los modelos de acuerdo con la configuración de la conexión */
 const sequelize = require('../models/index.js').sequelize;
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
@@ -15,20 +15,19 @@ router.get('/', async function (req, res, next) {
 
   /* 3. Uso del método findAll */
   let usersCollection = await models.users.findAll({
-
     /* 3.1. Including everything */
     include: { all: true, nested: true },
 
-      /* 3.2. Raw Queries */
-      raw: true,
+    /* 3.2. Raw Queries */
+    raw: true,
     nest: true,
 
-
   })
-   
+
   let rolesCollection = await models.roles.findAll({})
+
   /* 4. Paso de parámetros a la vista */
-  res.render('crud', {username: req.cookies['username'], title: 'CRUD of users', usersArray: usersCollection, rolesArray: rolesCollection });
+  res.render('crud', {username: req.cookies['username'], title: 'CRUD with users', usersArray: usersCollection, rolesArray: rolesCollection });
 
 });
 
@@ -50,7 +49,6 @@ router.post('/', async (req, res) => {
     let user = await models.users.create({ name: name, password: passwordHash })
     /* 5.1. Utilice el model.user_roles para crear la relación ( user.iduser , idrole) */
     await models.users_roles.create({ users_iduser: user.iduser, roles_idrole: idrole })
-
 
     /* 6. Redireccione a la ruta con la vista principal '/users' */
     res.redirect('/users')
