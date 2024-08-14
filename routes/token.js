@@ -8,7 +8,7 @@ var token =   await jwt.sign({
     data: 'foobar'
   }, 'secret');
 
-    res.render('token', { title: 'Express', tk: token});
+    res.render('token',{username: req.cookies['username'], title: 'Express', tk: token});
   });
 
  module.exports = router;
