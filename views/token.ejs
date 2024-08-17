@@ -23,7 +23,7 @@
     </head>
     <body>
         <div class="container-xl">
-            
+            <%- include('partials/navbar.ejs') %>
             <div id="myModal">
                 <div class="modal-dialog modal-newsletter">
                     <div class="modal-content">
@@ -38,8 +38,7 @@
                                 aplicación datos</p>
                             <div class="input-group">
                                 <p
-                                    class="form-control hint-text"> <%= Token %>
-                                </p>
+                                    class="form-control hint-text"> <%= tk %></p>
                             </div>
                         </div>
                     </div>

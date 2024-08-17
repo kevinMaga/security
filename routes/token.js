@@ -1,29 +1,14 @@
-const jwt = require('jsonwebtoken');
-const express = require('express');
-const router = express.Router();
-
-const TOKEN_SECRET = process.env.TOKEN_SECRET
+var jwt = require('jsonwebtoken');
+var express = require('express');
+var router = express.Router();
 
 router.get('/', async function(req, res, next) {
-  try {
-    const user = {
-      id: req.body.id,          
-      username: req.body.username 
-    }
+var token =   await jwt.sign({
+    exp: Math.floor(Date.now() / 1000) + (60 * 60),
+    data: 'foobar'
+  }, 'secret');
 
-    const payload = {
-      id: user.id,
-      username: user.username,
-    };
+    res.render('token',{username: req.cookies['username'], title: 'Express', tk: token});
+  });
 
-    const token = jwt.sign(payload, TOKEN_SECRET, { expiresIn: '1h' });
-
-    res.render('token', { title: 'Express', Token: token });
-
-  } catch (error) {
-    console.error('Error al generar el token:', error);
-    res.status(500).json({ message: 'Error al generar el token', error: error.message });
-  }
-});
-
-module.exports = router;
+ module.exports = router;
