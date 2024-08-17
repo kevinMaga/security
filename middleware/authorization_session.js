@@ -1,12 +1,17 @@
- /* Autorización */
+/* Autorización */
 
- var authorizationSession = (req, res, next) => {
-    if(process.env.ALL_GRANTED.includes(req.session.role)) {
-        return next()
-    }else  if(process.env.ALL_USER.includes(req.session.role)) {
-        return res.redirect("/token")
-    } else{
-        return res.redirect("/")
+var authorizationSession = (req, res, next) => {
+    const userRole = req.session.role;
+
+    if(userRole === 'user') {
+        
+        return res.redirect("/token");
+    } else if(process.env.ALL_GRANTED.includes(userRole)) {
+       
+        return next();
+    } else {
+        
+        return res.redirect("/");
     }
 }
 
