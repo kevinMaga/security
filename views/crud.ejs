@@ -18,10 +18,17 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-    <!-- 1. Referencia al archivo estático en public -->
-    <!-- link rel="stylesheet" href="./crud-style.css"-->
+    <!-- 1. Referencia al archivo estático dentro de public -->
 
+    <!-- <link rel="stylesheet" href="./crud-style.css"> -->
     <link rel="stylesheet" href="stylesheets/crud-style.css">
+
+    ...
+
+    <!-- 2. Referencia al archivo estático dentro de public -->
+
+    <!-- <script src="./crud-javascript.js" defer></script> -->
+    <script src="javascripts/crud-javascript.js" defer></script>
 
 </head>
 
@@ -81,12 +88,7 @@
                                         <%= user.name %>
                                     </td>
                                     <td>
-                                        <!-- 
-                                        Dato relacionado
-                       
-                                        users->users_roles->roles.name
-                                     -->
-                                     <%= user.users_roles.roles_idrole_role.name %>
+                                        <%= user.users_roles.roles_idrole_role.name %>
                                     </td>
                                     <td>
                                         <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i
@@ -116,7 +118,7 @@
                 </div>
             </div>
     </div>
-    <!-- Add Modal HTML -->
+    <!-- Edit Modal HTML -->
     <div id="addEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -147,7 +149,7 @@
                                     <% }) %>
                             </select>
                         </div>
-
+                        
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -217,8 +219,8 @@
     </div>
 
     <!-- 2. Referencia al archivo estático en public -->
-    <!-- script src="./crud-javascript.js" defer></script-->
-    <script src="javascripts/crud-javascript.js" defer></script>
+    <script src="./crud-javascript.js" defer></script>
+
 </body>
 
 </html>
