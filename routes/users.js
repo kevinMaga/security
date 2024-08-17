@@ -1,39 +1,36 @@
 var express = require('express');
 var router = express.Router();
-
-/* 1. Importe el módulo crypto */
-let crypto = require('crypto');
-
-/* 1. Cargue los modelos de acuerdo con la configuración de la conexión */
-const sequelize = require('../models/index.js').sequelize;
-var initModels = require("../models/init-models");
-var models = initModels(sequelize);
-
+ /* 1. Cargue los modelos de acuerdo con la configuración de la conexión */
+ const sequelize = require('../models/index.js').sequelize;
+ var initModels = require("../models/init-models");
+ var models = initModels( sequelize );  
+  /* 1. Importe el módulo crypto */
+  let crypto = require('crypto'); 
 /* GET users listing. */
-/* 2. Convierta el callback en asíncrono */
-router.get('/', async function (req, res, next) {
-
-  /* 3. Uso del método findAll */
-  let usersCollection = await models.users.findAll({
+router.get('/', async function(req, res, next) {
+     
+      /* 3. Uso del método findAll */
+   let usersCollection = await models.users.findAll({ 
     /* 3.1. Including everything */
     include: { all: true, nested: true },
-
+       
     /* 3.2. Raw Queries */
     raw: true,
-    nest: true,
+    nest: true,})
+   
+   let rolesCollection = await models.roles.findAll({ })
 
-  })
-
-  let rolesCollection = await models.roles.findAll({})
-
-  /* 4. Paso de parámetros a la vista */
-  res.render('crud', {username: req.cookies['username'], title: 'CRUD with users', usersArray: usersCollection, rolesArray: rolesCollection });
-
+   /* 4. Paso de parámetros a la vista */
+   res.render('crud', { username:req.cookies['username'],
+    title: 'CRUD with users', 
+    usersArray: usersCollection,
+    rolesArray: rolesCollection
 });
-
-/* POST user. */
-/* 2. Cree el callback asíncrono que responda al método POST */
-router.post('/', async (req, res) => {
+  
+});
+ /* POST user. */
+ /* 2. Cree el callback asíncrono que responda al método POST */
+ router.post('/', async (req, res) => {
 
   /* 3. Desestructure los elementos en el cuerpo del requerimiento */
   let { name, password, idrole } = req.body;
@@ -60,5 +57,4 @@ router.post('/', async (req, res) => {
   }
 
 })
-
 module.exports = router;

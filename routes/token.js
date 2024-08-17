@@ -1,14 +1,30 @@
-var jwt = require('jsonwebtoken');
-var express = require('express');
+require('dotenv').config()
+
+var express = require("express");
 var router = express.Router();
 
-router.get('/', async function(req, res, next) {
-var token =   await jwt.sign({
-    exp: Math.floor(Date.now() / 1000) + (60 * 60),
-    data: 'foobar'
-  }, 'secret');
 
-    res.render('token',{username: req.cookies['username'], title: 'Express', tk: token});
-  });
+const sequelize = require('../models/index.js').sequelize;
+var initModels = require("../models/init-models");
+var models = initModels(sequelize);
 
- module.exports = router;
+const jwt = require('jsonwebtoken');
+const { TOKEN_SECRET } = process.env;
+
+
+/* GET home page. */
+router.get("/", function (req, res, next) {
+
+  const payload = {
+    user: {
+      id: req.session.id,
+      username: req.session.username
+    },
+    role: req.session.role
+  };
+
+  const token = jwt.sign(payload, TOKEN_SECRET, { expiresIn: '1h' });
+
+  return res.render("token", { title: "Token user", username: req.cookies['username'], token } );
+});
+module.exports = router;
